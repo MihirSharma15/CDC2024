@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TypeAnimation } from 'react-type-animation';
+import { Globe } from "@/components/ui/globe";
 
 export default function LandingPage() {
   return (
