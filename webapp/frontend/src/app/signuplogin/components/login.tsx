@@ -15,12 +15,21 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 const formSchema = z.object({
-    username: z.string().min(3, 'Username must be at least 3 characters').max(20, 'Username must be 20 characters or less'),
+    email: z.string().email('Invalid email address'),
     password: z.string().min(6, 'Password must be at least 6 characters').max(100, 'Password must be 100 characters or less'),
 });
 
+const handleSignIn = async (email: string, password: string) => {
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        console.log('User signed in:', userCredential.user);
+    } catch (error) {
+        console.error('Error signing in:', error);
+    }
+}
 
 
 export default function Login() {
@@ -28,7 +37,7 @@ export default function Login() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            username: "",
+            email: "",
             password: "",
         },
     })
@@ -37,7 +46,7 @@ export default function Login() {
     function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(values)
+        handleSignIn(values.email, values.password);
     }
     return (
         <Form {...form}>
@@ -45,16 +54,13 @@ export default function Login() {
                 
                 <FormField
                     control={form.control}
-                    name="username"
+                    name="email"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Username</FormLabel>
+                            <FormLabel>Email</FormLabel>
                             <FormControl>
-                                <Input placeholder="JaneDoeSoSilly15" {...field} />
+                                <Input placeholder="janedoe@gmail.com" {...field} />
                             </FormControl>
-                            <FormDescription>
-                                This is your public display name.
-                            </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}

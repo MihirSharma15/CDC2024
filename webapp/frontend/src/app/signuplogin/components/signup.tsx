@@ -15,6 +15,17 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
+
+const handleSignUp = async (email: string, password: string) => {
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        console.log('User signed up:', userCredential.user);
+    } catch (error) {
+        console.error('Error signing up:', error);
+    }
+};
 
 const formSchema = z.object({
     name: z.string().min(1, 'Name is required').max(50, 'Name must be 50 characters or less'),
@@ -49,7 +60,7 @@ export default function Signup() {
     function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(values)
+        handleSignUp(values.email, values.password);
     }
     return (
         <Form {...form}>

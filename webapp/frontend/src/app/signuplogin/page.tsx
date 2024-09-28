@@ -23,7 +23,7 @@ import { ArrowLeft } from "lucide-react"
 
 export default function Page() {
     return (
-        <div className="flex flex-col w-full min-h-screen items-center justify-center">
+        <div className="flex flex-col w-full min-h-full items-center justify-center">
             <nav className="w-full p-4">
                 <Link href="/">
                     <Button variant="ghost">
@@ -39,7 +39,7 @@ export default function Page() {
                 <TabsContent value="signup">
                     <Card>
                         <CardHeader>
-                            <CardTitle></CardTitle>
+                            <CardTitle>Sign up</CardTitle>
                             <CardDescription>
                                 Sign up for an account today.
                             </CardDescription>
