@@ -37,7 +37,7 @@ export default function Login() {
             const user = userCredential.user;
             console.log('User signed in:', userCredential.user);
 
-            router.push(`/ranking/${user.uid}`);
+            router.push(`/dashboard/${user.uid}`);
 
         } catch (error) {
             console.error('Error signing in:', error);

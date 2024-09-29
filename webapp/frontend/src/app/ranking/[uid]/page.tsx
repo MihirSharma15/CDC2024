@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { auth } from '@/lib/firebase';
+import RankCategoriesForm from './RankCategoriesForm';
 
 const RankingPage = () => {
     const [user, setUser] = useState<any>(null);
@@ -34,9 +35,8 @@ const RankingPage = () => {
     }
 
     return (
-        <div>
-            <h1>Ranking for user: {uid}</h1>
-            {/* <RankCategoriesForm user={user} /> */}
+        <div className="h-screen w-full flex flex-col items-center justify-center">
+            <RankCategoriesForm user={user} />
         </div>
     );
 };

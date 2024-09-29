@@ -18,6 +18,8 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
 // Initialize Firebase services
 export const auth = getAuth(app);
 export const firestore = getFirestore(app);
+export const db = getFirestore(app);
+
 
 // Initialize Analytics only in the browser and when supported
 if (typeof window !== "undefined") {
