@@ -3,7 +3,7 @@ Welcome! This is the project repo for our contribution to the 2024 Carolina Data
 ## The task
 At CDC 2024, participants were allowed to choose from tracks centered around 5 disciplines: Business, Health Science, Social Science, Natural Science, and Pop Culture. Each track came with a data set to be analyzed and visualized. 
 ## Our approach
-For our project, we chose to work with the [Social Science Track data set](https://archive.ics.uci.edu/dataset/485/tarvel+review+ratings), which investigates users’ ratings throughout Europe based on 24 different attributes, such as ‘beaches’ and ‘art galleries.’ We began by investigating the model through visualizations, attempting to find correlations across users and attributes.
+For our project, we chose to work with the [Social Science Track data set](https://archive.ics.uci.edu/dataset/485/tarvel+review+ratings), which investigates users’ ratings on attractions throughout Europe based on 24 different attributes, such as ‘beaches’ and ‘art galleries.’ We began by investigating the model through visualizations, attempting to find correlations across users and attributes.
 ## What we found
 We expected to find relationships between certain attributes across users (i.e., did users who generally enjoyed churches tend to like museums as well?). To get a better idea of the data we were working with, we used Tableau to gather rating distributions for each attriute across users:
 
