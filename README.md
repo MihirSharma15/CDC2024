@@ -24,16 +24,14 @@ This is done by using a k-nearest neighbors (KNN) algorithm - each user’s rati
 
 ## Our solution: Meet, Happy Trails
 
-<img width="711" alt="image" src="https://github.com/user-attachments/assets/001ed26e-42d8-48b4-9ab7-093f8414ff72">
-
 #### Happy Trails enables users to find their perfect travel buddy.
+
+<img width="711" alt="image" src="https://github.com/user-attachments/assets/001ed26e-42d8-48b4-9ab7-093f8414ff72">
 
 ### Interested in learning more?
 
-### Click Here 👉 https://youtu.be/fEWcttEybOU
+### Click Here: https://youtu.be/fEWcttEybOU
 
-
-
-Our system converts interests into linear algebra vectors, and finds out connections that would otherwise be missed.
+Our system combines a friendly interface with a backend vector analysis to find connections that would otherwise be missed.
 
 Skills: Next.js, React, TailwindCSS, Shad/cn, Firebase, Firestore, No-SQL Databases, Fire Auth (OAuth2), FastAPI, Python, sklearn, numpy, K-Closest neighbors
