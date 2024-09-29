@@ -22,5 +22,12 @@ This is done by using a k-nearest neighbors (KNN) algorithm - each user’s rati
 
 ![AGV_vUetDPFeMDq4WZ30cc7b9gX_bpnd6Z85cbZ8Fx3cROT58NN5vw8z69_as4tmXesrclTc1c_40ZtIklGSTbBx2YeUFv38Hu3gxx_RFFqjuYLGt8YPgk_Z7upKOHPfETvuN1doXlDDiPaYJ-Alsy4LiC8wbdiC0JI=s2048](https://github.com/user-attachments/assets/b14f9b19-5e9a-4de7-9025-e8ed8c5d2d31)
 
+## Our solution: Meet, Happy Trails
+
 <img width="711" alt="image" src="https://github.com/user-attachments/assets/001ed26e-42d8-48b4-9ab7-093f8414ff72">
 
+#### Happy Trails enables users to find their perfect travel buddy.
+
+Our system converts interests into linear algebra vectors, and finds out connections that would otherwise be missed.
+
+Skills: Next.js, React, TailwindCSS, Shad/cn, Firebase, Firestore, No-SQL Databases, Fire Auth (OAuth2), FastAPI, Python, sklearn, numpy, K-Closest neighbors
