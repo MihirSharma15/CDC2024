@@ -1,5 +1,5 @@
 # CDC2024
-Welcome! This is our project repo for our contribution to the 2024 Carolina Data Challenge.
+Welcome! This is the project repo for our contribution to the 2024 Carolina Data Challenge.
 ## The task
 At CDC 2024, participants were allowed to choose from tracks centered around 5 disciplines: Business, Health Science, Social Science, Natural Science, and Pop Culture. Each track came with a data set to be analyzed and visualized. 
 ## Our approach
