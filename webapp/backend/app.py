@@ -158,24 +158,20 @@ def get_buddies(username):
     return 
 '''
 
-def get_buddies(username):
+def get_buddies(uid):
     users_ref = db.collection('users')
     users = users_ref.stream()
 
     user_data = {}
-    all_users = []
-
     uid_to_username = {}
 
     for user in users:
         data = user.to_dict()
-        uid = user.id
+        current_uid = user.id
         if 'username' in data:
-            uid_to_username[uid] = data['username']
-            if data['username'] == username:
-                target_uid = uid
+            uid_to_username[current_uid] = data['username']
 
-    if not uid_to_username.get(target_uid, None):
+    if uid not in uid_to_username:
         print("User not found.")
         return []
 
@@ -184,16 +180,17 @@ def get_buddies(username):
 
     for ranking in rankings:
         data = ranking.to_dict()
-        uid = ranking.id
-        user_data[uid] = [data.get(str(i), 0) for i in range(24)]  
+        current_uid = ranking.id
+        user_data[current_uid] = [data.get(str(i), 0) for i in range(24)]  
 
-    if target_uid not in user_data:
+    if uid not in user_data:
         print("User rankings not found.")
         return []
 
-    target_vector = user_data[target_uid]
-    attribute_matrix = np.array([user_data[uid] for uid in uid_to_username if uid != target_uid])
-    uid_list = [uid for uid in uid_to_username if uid != target_uid]
+    target_vector = user_data[uid]
+
+    attribute_matrix = np.array([user_data[other_uid] for other_uid in uid_to_username if other_uid != uid])
+    uid_list = [other_uid for other_uid in uid_to_username if other_uid != uid]
 
     knn_attributes = NearestNeighbors(n_neighbors=10).fit(attribute_matrix)
     _, indices = knn_attributes.kneighbors([target_vector])
@@ -206,16 +203,16 @@ def get_buddies(username):
         neighbor_vector = user_data[neighbor_uid]
 
         differences = np.abs(np.array(target_vector) - np.array(neighbor_vector))
-        most_similar_idx = np.argsort(differences)[:2] 
+        most_similar_idx = np.argsort(differences)[:2]  # Get two most similar attributes
 
         closest_neighbors.append([
             neighbor_uid,
             neighbor_username,
-            most_similar_idx[0],  
-            most_similar_idx[1]   
+            int(most_similar_idx[0]),  
+            int(most_similar_idx[1])   
         ])
 
     print(closest_neighbors)
     return closest_neighbors
 
-get_buddies("rachit")
+get_buddies("991227")
