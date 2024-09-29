@@ -111,6 +111,7 @@ export default function Component() {
             <h1 className="text-3xl font-bold text-center mb-8">Your Travel Buddy Matches!</h1>
             <div className="flex flex-row w-full justify-center items-center">
                 <Button variant={"link"}>
+                    <link href="/visual"></link>
                     See how it works.
                 </Button>
             </div>
