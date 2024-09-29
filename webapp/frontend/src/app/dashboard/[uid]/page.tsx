@@ -1,39 +1,109 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { ChevronLeftIcon, ChevronRightIcon, Link, MapPinIcon, PlaneIcon } from "lucide-react"
+import { ChevronLeftIcon, ChevronRightIcon, MapPinIcon, PlaneIcon } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useParams, useRouter } from "next/navigation"
 
-// Mock data for demonstration
-const matches = [
-    { id: 1, name: "Alex", age: 28, location: "New York", interests: ["Hiking", "Photography", "Food"] },
-    { id: 10391, name: "Sam", age: 32, location: "London", interests: ["Museums", "Art", "History"] },
-    { id: 3, name: "Jamie", age: 25, location: "Tokyo", interests: ["Technology", "Anime", "Sushi"] },
-    { id: 4, name: "Taylor", age: 30, location: "Sydney", interests: ["Surfing", "Beach", "Wildlife"] },
-    { id: 5, name: "Jordan", age: 27, location: "Paris", interests: ["Fashion", "Cuisine", "Architecture"] },
-]
+// Interest dictionary where the numbers in the array map to the categories you provided
+const interestDictionary: { [key: number]: string } = {
+    0: 'Churches',
+    1: 'Resort',
+    2: 'Beach',
+    3: 'Park',
+    4: 'Theater',
+    5: 'Museum',
+    6: 'Mall',
+    7: 'Zoo',
+    8: 'Restaurant',
+    9: 'Pub',
+    10: 'Local Services',
+    11: 'Pizza/Burger',
+    12: 'Hotels',
+    13: 'Juice Bar',
+    14: 'Gallery',
+    15: 'Dance Club',
+    16: 'Pool',
+    17: 'Gym',
+    18: 'Bakery',
+    19: 'Spa',
+    20: 'Cafe',
+    21: 'Viewpoint',
+    22: 'Monument',
+    23: 'Garden',
+};
+
+// List of random cities around the world
+const randomCities = [
+    'New York, USA', 'London, UK', 'Tokyo, Japan', 'Paris, France', 'Sydney, Australia',
+    'Berlin, Germany', 'Toronto, Canada', 'Cape Town, South Africa', 'Mumbai, India',
+    'Rio de Janeiro, Brazil', 'Dubai, UAE', 'Bangkok, Thailand', 'Istanbul, Turkey',
+    'Moscow, Russia', 'Rome, Italy', 'Mexico City, Mexico', 'Cairo, Egypt', 'Seoul, South Korea',
+    'Madrid, Spain', 'Buenos Aires, Argentina', 'Athens, Greece', 'Lisbon, Portugal'
+];
+
+// Helper function to get a random city
+function getRandomCity() {
+    const randomIndex = Math.floor(Math.random() * randomCities.length);
+    return randomCities[randomIndex];
+}
 
 export default function Component() {
-    const [user, setUser] = useState<any>(null);
+    const [matches, setMatches] = useState<any[]>([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const params = useParams();  // Get dynamic route params
     const router = useRouter();
 
     const uid = params?.uid;
 
-    const [isLoading, setLoading] = useState<any>(false);
-    const [currentIndex, setCurrentIndex] = useState(0)
+    // Fetch data function to get data from the local API
+    async function fetchData(uid: string): Promise<any[]> {
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/${uid}`)
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data: any = await response.json();
+            return data;
+
+        } catch (error) {
+            console.log(error);
+            return [];
+        }
+    }
+
+    useEffect(() => {
+        if (uid) {
+            fetchData(uid).then(jsonData => {
+                // Process the JSON data to match the format required
+                const processedMatches = jsonData.map((matchArray: any[]) => {
+                    const [id, name, interestKey1, interestKey2] = matchArray;
+                    return {
+                        id,
+                        name,
+                        age: Math.floor(Math.random() * 20) + 20, // Set random age between 20 and 40
+                        location: getRandomCity(), // Select random city for location
+                        interests: [
+                            interestDictionary[interestKey1],  // Map the interest keys to dictionary values
+                            interestDictionary[interestKey2]
+                        ],
+                    };
+                });
+                setMatches(processedMatches);
+            });
+        }
+    }, [uid]);
 
     const nextMatch = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % matches.length)
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % matches.length);
     }
 
     const prevMatch = () => {
-        setCurrentIndex((prevIndex) => (prevIndex - 1 + matches.length) % matches.length)
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + matches.length) % matches.length);
     }
 
     return (
@@ -50,7 +120,9 @@ export default function Component() {
                 ))}
             </div>
             <div className="md:hidden">
-                <MatchCard match={matches[currentIndex]} index={currentIndex} />
+                {matches.length > 0 && (
+                    <MatchCard match={matches[currentIndex]} index={currentIndex} />
+                )}
                 <div className="flex justify-center mt-4 space-x-4">
                     <Button onClick={prevMatch} variant="outline" size="icon">
                         <ChevronLeftIcon className="h-4 w-4" />
@@ -64,7 +136,7 @@ export default function Component() {
     )
 }
 
-function MatchCard({ match, index }) {
+function MatchCard({ match, index }: { match: any, index: number }) {
     return (
         <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -90,7 +162,7 @@ function MatchCard({ match, index }) {
                     <div className="mb-4">
                         <h3 className="font-semibold mb-2">Interests:</h3>
                         <div className="flex flex-wrap gap-2">
-                            {match.interests.map((interest) => (
+                            {match.interests.map((interest: string) => (
                                 <Badge key={interest} variant="secondary">
                                     {interest}
                                 </Badge>

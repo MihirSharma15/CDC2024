@@ -30,7 +30,7 @@ export default function RankCategoriesForm({ user }: { user: any }) {
                 timestamp: new Date(),
             })
 
-            alert('Rankings submitted successfully!')
+            
         } catch (error) {
             console.error('Error submitting rankings:', error)
             alert('Failed to submit rankings. Please try again.')
