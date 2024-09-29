@@ -1,7 +1,8 @@
 // firebase.js
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp, getApps } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getAnalytics, isSupported } from "firebase/analytics";
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -12,8 +13,19 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const analytics = getAnalytics(app);
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
 
-export { auth };
+// Initialize Firebase services
+export const auth = getAuth(app);
+export const firestore = getFirestore(app);
+
+// Initialize Analytics only in the browser and when supported
+if (typeof window !== "undefined") {
+    isSupported().then((supported) => {
+        if (supported) {
+            const analytics = getAnalytics(app);
+        }
+    }).catch((error) => {
+        console.error("Analytics initialization failed:", error);
+    });
+}

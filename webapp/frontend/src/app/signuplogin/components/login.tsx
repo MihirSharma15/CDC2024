@@ -17,22 +17,32 @@ import {
 import { Input } from "@/components/ui/input"
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { useRouter } from 'next/navigation';
 const formSchema = z.object({
     email: z.string().email('Invalid email address'),
     password: z.string().min(6, 'Password must be at least 6 characters').max(100, 'Password must be 100 characters or less'),
 });
 
-const handleSignIn = async (email: string, password: string) => {
-    try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        console.log('User signed in:', userCredential.user);
-    } catch (error) {
-        console.error('Error signing in:', error);
-    }
-}
+
 
 
 export default function Login() {
+
+    const router = useRouter();
+
+    const handleSignIn = async (email: string, password: string) => {
+
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            console.log('User signed in:', userCredential.user);
+
+            router.push(`/ranking/${user.uid}`);
+
+        } catch (error) {
+            console.error('Error signing in:', error);
+        }
+    }
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),

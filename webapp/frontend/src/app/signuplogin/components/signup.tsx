@@ -17,15 +17,10 @@ import {
 import { Input } from "@/components/ui/input"
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { useRouter } from 'next/navigation';
 
-const handleSignUp = async (email: string, password: string) => {
-    try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        console.log('User signed up:', userCredential.user);
-    } catch (error) {
-        console.error('Error signing up:', error);
-    }
-};
+
+
 
 const formSchema = z.object({
     name: z.string().min(1, 'Name is required').max(50, 'Name must be 50 characters or less'),
@@ -44,6 +39,24 @@ const formSchema = z.object({
 
 
 export default function Signup() {
+
+    const router = useRouter();
+
+    const handleSignUp = async (email: string, password: string) => {
+
+        
+
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user
+            console.log('User signed up:', userCredential.user);
+
+            router.push(`/ranking/${user.uid}`);
+
+        } catch (error) {
+            console.error('Error signing up:', error);
+        }
+    };
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
