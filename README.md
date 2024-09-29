@@ -21,3 +21,6 @@ The **HappyTrails** web app matches users by gathering input from thousands of t
 This is done by using a k-nearest neighbors (KNN) algorithm - each user’s rating values are treated as a 24 dimensional vector (one dimension for each attribute) and compared to the surrounding data. The algorithm measures the distance between vectors and chooses the closest ones to match with.
 
 ![AGV_vUetDPFeMDq4WZ30cc7b9gX_bpnd6Z85cbZ8Fx3cROT58NN5vw8z69_as4tmXesrclTc1c_40ZtIklGSTbBx2YeUFv38Hu3gxx_RFFqjuYLGt8YPgk_Z7upKOHPfETvuN1doXlDDiPaYJ-Alsy4LiC8wbdiC0JI=s2048](https://github.com/user-attachments/assets/b14f9b19-5e9a-4de7-9025-e8ed8c5d2d31)
+
+<img width="711" alt="image" src="https://github.com/user-attachments/assets/001ed26e-42d8-48b4-9ab7-093f8414ff72">
+
