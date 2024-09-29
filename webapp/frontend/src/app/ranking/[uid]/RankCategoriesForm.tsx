@@ -6,12 +6,16 @@ import { db } from '@/lib/firebase'
 import { doc, setDoc } from 'firebase/firestore'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { useRouter } from 'next/navigation'
 
 const categories = [
     'Churches', 'Resort', 'Beach', 'Park', "Theater", "Museum", "Mall", "Zoo", "Restaurant", "Pub", "Local Services", "Pizza/Burger", "Hotels", "Juice Bar", "Gallery", "Dance Club", "Pool", "Gym", "Bakery", "Spa", "Cafe", "Viewpoint", "Monument", "Garden"
 ]
 
 export default function RankCategoriesForm({ user }: { user: any }) {
+
+    const router = useRouter();
+
     const [ratings, setRatings] = useState<number[]>(Array(24).fill(0))
 
     const handleRatingChange = (index: number, value: number) => {
@@ -29,6 +33,9 @@ export default function RankCategoriesForm({ user }: { user: any }) {
                 rankings: ratings,
                 timestamp: new Date(),
             })
+            console.log("done!")
+            router.push(`/dashboard/${user.uid}`);
+
 
             
         } catch (error) {
